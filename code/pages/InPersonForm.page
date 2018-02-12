@@ -1,0 +1,45 @@
+<apex:page standardController="SMS__c" extensions="InPersonFormExt" showHeader="false" sidebar="false">
+    <apex:stylesheet value="{!URLFOR($Resource.SendSMSCSS)}"/>    
+    <div class="pageContainer">
+        <apex:outputPanel id="theMainSection">
+            <apex:form styleClass="myForm" id="theForm">
+                <apex:pageMessages />
+                <br/>
+                <apex:outputPanel id="theSetupSection" rendered="{!renderSetup}">
+                    <h2>Setup Section</h2>
+                    <hr/>
+                    <br/>
+                    <apex:inputField label="Contact" value="{!contactForSurvey.ReportsToId}" style="border:1px solid #eee!important;border-radius:0;" rendered="{!$ObjectType.Contact.fields.ReportsToId.Accessible}"/>
+                    
+                    <apex:selectList size="1" value="{!selectedSurvey}" style="border:1px solid #eee!important;border-radius:0;" rendered="{!$ObjectType.SMS_Template__c.fields.Text__c.Accessible}">
+                        <apex:selectOptions value="{!formSurveysToChoose}"/>
+                    </apex:selectList>
+                    
+                    <apex:commandButton value=" Start Form " title=" Start Form " action="{!start}" id="theStartButton" reRender="theMainSection" style="border:1px solid #eee!important;border-radius:0;"/>
+    
+                </apex:outputPanel>
+    
+                <br/>
+                    
+                    <apex:outputPanel id="theOutputSection" rendered="{!renderOutputText}" >
+                        <h2><apex:outputText rendered="{!renderOutputText}"> {!outputText}</apex:outputText></h2>
+                        <hr/>
+                        <br/>
+                        <apex:inputField value="{!responseSMS.Message__c}"/>
+                        <br/>        
+    
+                    </apex:outputPanel>
+                
+                    <apex:outputPanel id="theCompleteSection" rendered="{!renderCompleteSection}">
+                        <h2>Thank you for your response!</h2>
+                
+                
+                    </apex:outputPanel>
+                    <hr/>                
+                    <apex:commandButton action="{!respond}" value="Respond" id="theSaveButton" reRender="theMainSection, theOutputSection" />
+                    <apex:commandButton action="{!restart}" value="Restart" id="theRestartButton" reRender="theMainSection" />
+                    <apex:commandButton action="{!newSurvey}" value="New Survey" id="theNewSurveyButton" onclick="window.location.reload()"/>
+            </apex:form>
+        </apex:outputPanel>
+    </div>
+</apex:page>

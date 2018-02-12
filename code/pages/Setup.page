@@ -1,0 +1,12 @@
+<apex:page sidebar="false" controller="SetupCTRL">
+    <apex:messages />
+    Setup MogliSMS
+    <apex:form >
+    <ul>
+        <li>Schedule SMS Utility Every <apex:inputText value="{!scheduleFrequency}"/> minutes</li>
+        <li><apex:commandLink action="{!scheduleSMSCleanupUtil}" value="Schedule"></apex:commandLink></li>          
+        <li><apex:commandLink action="{!unscheduleSMSCleanupUtil}" value="Un-schedule"></apex:commandLink></li>          
+
+    </ul>
+    </apex:form>
+</apex:page>

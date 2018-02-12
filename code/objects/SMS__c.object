@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>SMS_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Attachments__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Attachments</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Campaign__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Campaign</label>
+        <referenceTo>Campaign</referenceTo>
+        <relationshipLabel>SMS</relationshipLabel>
+        <relationshipName>SMS</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>SMS</relationshipLabel>
+        <relationshipName>SMS</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Debug__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Debug</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Direction__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Direction</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Incoming</fullName>
+                    <default>false</default>
+                    <label>Incoming</label>
+                </value>
+                <value>
+                    <fullName>Outgoing</fullName>
+                    <default>false</default>
+                    <label>Outgoing</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Gateway__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Gateway</label>
+        <referenceTo>Gateway__c</referenceTo>
+        <relationshipLabel>SMS</relationshipLabel>
+        <relationshipName>SMS</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Lead__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Lead</label>
+        <referenceTo>Lead</referenceTo>
+        <relationshipLabel>SMS</relationshipLabel>
+        <relationshipName>SMS</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Message__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Message</label>
+        <length>20000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Offline__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Offline</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Phone_Number__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Phone Number</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Scheduled_Delivery__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Scheduled Delivery</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Queued</fullName>
+                    <default>false</default>
+                    <label>Queued</label>
+                </value>
+                <value>
+                    <fullName>Sending</fullName>
+                    <default>false</default>
+                    <label>Sending</label>
+                </value>
+                <value>
+                    <fullName>Sent Successfully</fullName>
+                    <default>false</default>
+                    <label>Sent Successfully</label>
+                </value>
+                <value>
+                    <fullName>Received Successfully</fullName>
+                    <default>false</default>
+                    <label>Received Successfully</label>
+                </value>
+                <value>
+                    <fullName>Error</fullName>
+                    <default>false</default>
+                    <label>Error</label>
+                </value>
+                <value>
+                    <fullName>Scheduled</fullName>
+                    <default>false</default>
+                    <label>Scheduled</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>SMS</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Lead__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Message__c</columns>
+        <columns>Phone_Number__c</columns>
+        <columns>Direction__c</columns>
+        <columns>Status__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Attachments__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Incoming</fullName>
+        <columns>NAME</columns>
+        <columns>Contact__c</columns>
+        <columns>Lead__c</columns>
+        <columns>Message__c</columns>
+        <columns>Phone_Number__c</columns>
+        <columns>Status__c</columns>
+        <columns>Campaign__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Direction__c</field>
+            <operation>equals</operation>
+            <value>Incoming</value>
+        </filters>
+        <label>Incoming</label>
+    </listViews>
+    <listViews>
+        <fullName>Outgoing</fullName>
+        <columns>NAME</columns>
+        <columns>Contact__c</columns>
+        <columns>Lead__c</columns>
+        <columns>Message__c</columns>
+        <columns>Phone_Number__c</columns>
+        <columns>Status__c</columns>
+        <columns>Campaign__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Direction__c</field>
+            <operation>equals</operation>
+            <value>Outgoing</value>
+        </filters>
+        <label>Outgoing</label>
+    </listViews>
+    <listViews>
+        <fullName>Scheduled</fullName>
+        <columns>NAME</columns>
+        <columns>Contact__c</columns>
+        <columns>Lead__c</columns>
+        <columns>Message__c</columns>
+        <columns>Phone_Number__c</columns>
+        <columns>Scheduled_Delivery__c</columns>
+        <columns>Status__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>Scheduled</label>
+    </listViews>
+    <nameField>
+        <displayFormat>SMS{YY}{MM}{DD}-{0000}</displayFormat>
+        <label>SMS Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>SMS</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Lead__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Contact__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Phone_Number__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Direction__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Message__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CREATED_DATE</customTabListAdditionalFields>
+        <listViewButtons>Mass_Delete</listViewButtons>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Mass_Delete</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Mass Delete</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/29.0/connection.js&quot;)} 
+
+var records = {!GETRECORDIDS( $ObjectType.SMS__c )}; 
+
+if (records[0] == null) { 
+alert(&quot;Please select at least one record.&quot;) } 
+else { 
+
+var errors = []; 
+var result = sforce.connection.deleteIds(records); 
+if (result &amp;&amp; result.length){ 
+var numFailed = 0; 
+var numSucceeded = 0; 
+for (var i = 0; i &lt; result.length; i++){ 
+var res = result[i]; 
+if (res &amp;&amp; res.success == &apos;true&apos;){ 
+numSucceeded++; 
+} else { 
+var es = res.getArray(&quot;errors&quot;); 
+if (es.length &gt; 0) { 
+errors.push(es[0].message); 
+} 
+numFailed++; 
+} 
+} 
+if (numFailed &gt; 0){ 
+alert(&quot;Failed: &quot; + numFailed + &quot;\nSucceeded: &quot; + numSucceeded + &quot; \n Due to: &quot; + errors.join(&quot;\n&quot;)); 
+} else { 
+alert(&quot;Number of records deleted: &quot; + numSucceeded); 
+} 
+} 
+window.location.reload(); 
+}</url>
+    </webLinks>
+</CustomObject>

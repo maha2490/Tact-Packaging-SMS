@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Form__c$Name</field>
+    </columns>
+    <columns>
+        <field>Form__c.Question_Responses__r$Name</field>
+    </columns>
+    <columns>
+        <field>Form__c$Phone_Number__c</field>
+    </columns>
+    <columns>
+        <field>Form__c$Lead__c</field>
+    </columns>
+    <columns>
+        <field>Form__c$FormTemplate__c</field>
+    </columns>
+    <columns>
+        <field>Form__c.Question_Responses__r$QuestionTemplate__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Form__c$Lead__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value></value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Form__c.Question_Responses__r$Response__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Mogli SMS Responses by Lead</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Forms_Responses__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Form__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,198 @@
+<aura:component access="global" controller="TextMessageComponentController" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId">
+	<!--Styles--> 
+	<!--<ltng:require styles="" scripts="/resource/streaming/SFStreaming/org/cometd.js,/resource/streaming/SFStreaming/jquery/jquery-1.5.1.js,/resource/streaming/SFStreaming/jquery/json2.js,/resource/streaming/SFStreaming/jquery/jquery.cometd.js" afterScriptsLoaded="{!c.setupJS}"/>-->
+	<ltng:require styles="" 
+                  scripts="{!join(',',
+                           $Resource.streaming + '/SFStreaming/org/cometd.js',
+                           $Resource.streaming + '/SFStreaming/jquery/jquery-1.5.1.js',
+                           $Resource.streaming + '/SFStreaming/jquery/jquery.cometd.js')}"
+                  afterScriptsLoaded="{!c.setupJS}"/>
+    <style>
+	.bubble_left
+	{
+		position: relative;
+		width: 40%;
+		min-height: 60px;
+		padding: 3px 5px 3px 5px;
+		background: #003300;
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		border-radius: 10px;
+		color: white;
+		margin-top:3px;
+		margin-botom:3px;
+	}
+
+	.bubble_left:after 
+	{
+		content: '';
+		position: absolute;
+		border-style: solid;
+		border-width: 6px 15px 6px 0;
+		border-color: transparent #003300;
+		display: block;
+		width: 0;
+		z-index: 1;
+		left: -15px;
+		top: 14px;
+	}
+
+
+	.bubble_right
+	{
+		position: relative;
+		width: 40%;
+		min-height: 60px;
+		padding: 3px 5px 3px 5px;
+		background: #002485;
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		border-radius: 10px;
+		color:white;
+		float:right;
+		clear:left;
+		margin-top:3px;
+		margin-botom:3px;
+	}
+
+	.bubble_right:after 
+	{
+		content: '';
+		position: absolute;
+		border-style: solid;
+		border-width: 6px 0 6px 15px;
+		border-color: transparent #002485;
+		display: block;
+		width: 0;
+		z-index: 1;
+		right: -15px;
+		top: 14px;
+	}
+
+	.txt_band{
+		width:100%; 
+		min-height:60px;
+		margin-top: 3px;
+		margin-bottom: 3px;
+	}
+
+	.bubble_message{
+		width:100%;
+		height:80%;
+		display:grid;
+
+	}
+	.bubble_meta{			
+		height:20%;
+		font-size:10px;
+		float:right;
+		bottom:0;
+		position: absolute;
+		text-align: right;
+		width:95%; 
+		padding-right:20px;
+		display: inline-table;
+	}
+
+	.message_control{
+		padding-top: 50px;
+		width:100%;
+	}
+
+	.message_input{
+		width:85%;
+		display:inline-block;
+	}
+
+	.message_send{
+		width: 15%;
+		float: right;
+		display:inline-block;
+		padding: 18px 10px 18px 10px;
+	}
+
+	.button{
+		min-width:100px;
+
+	}
+
+	.message_number{
+		width:40%;
+	}
+	.message_input_box{
+		width: 85%;
+	}
+		
+
+	</style>
+	<!--Handlers-->
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	
+	
+	<!--Attributes-->
+	<aura:attribute name="recordId" type="Id" />
+	
+	<aura:attribute name="txtMessage" type="String"/>
+	<aura:attribute name="gateways" type="String[]"/>
+    
+	<aura:attribute name="Messages" type="SMS__c[]" />
+	<aura:attribute name="OutgoingMessage" type="SMS__c"/>
+	<aura:attribute name="doneRendering" type="Boolean" default="false"/>
+	<aura:attribute name="doneRerendering" type="Boolean" default="false"/>
+
+
+	
+	<div id="textMessageComponent" class="slds-scrollable_y" style="height:500px;">
+        <div class="message_control">
+			<div class="message_input">
+				<ui:inputText class="message_input_box" label="Message:" value="{!v.txtMessage}" placeholder="Message to send...."/>
+			</div>
+			<div class="message_send">
+				<ui:button class="button" aura:id="sendButton" label="Send" press="{!c.sendText}"/>
+			</div>
+			<div class="message_number">
+				<ui:inputSelect aura:id="gatewayId" label="Send From #" class="message_number_select">
+			        <aura:iteration items="{!v.gateways}" var="gateway">
+			             <ui:inputSelectOption text="{!gateway}" label="{!gateway}"/>
+			        </aura:iteration>
+			    </ui:inputSelect>
+			</div>
+            <ui:inputSelect label="SMS Template:" class="dynamic" aura:id="smsTemplatePicklist" change="{!c.setTemplate}"/>
+			
+			<button style="opacity: 0;" id="hiddenButton" type="button" disabled="disabled">HIDDEN</button>
+		</div>
+		<aura:iteration items="{!v.Messages}" var="message">
+			<table>
+			<aura:if isTrue="{!message.Mogli_SMS__Direction__c == 'Incoming'}">
+				<tr class="txt_band">
+					<div class="bubble_left">
+						<div class="bubble_message">
+							{!message.Mogli_SMS__Message__c}
+						</div><br/>
+						<div class="bubble_meta">
+							Time: <ui:outputDate value="{!message.CreatedDate}" format="MM/dd/yyyy HH:mm:ss"/>				
+						</div>
+					</div>
+				</tr>
+			</aura:if>
+			<aura:if isTrue="{!message.Mogli_SMS__Direction__c == 'Outgoing'}">
+				<tr class="txt_band">
+					<div class="bubble_right">
+						<div class="bubble_message">
+							{!message.Mogli_SMS__Message__c}
+						</div><br/>
+						<div class="bubble_meta">
+							Time: <ui:outputDate value="{!message.CreatedDate}" format="MM/dd/yyyy HH:mm:ss"/>&nbsp;&nbsp;&nbsp;
+							Sent From: {!message.Mogli_SMS__Gateway__r.Name}
+						</div>
+					</div>
+				</tr>
+			</aura:if>
+		</table>
+		</aura:iteration>
+
+		
+	</div>
+	
+	<aura:handler event="c:TextMessageRenderEvent" action="{!c.handleIdUpdate}"/>
+</aura:component>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Default_Gateway__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Default Gateway</label>
+        <referenceTo>Gateway__c</referenceTo>
+        <relationshipLabel>Contacts</relationshipLabel>
+        <relationshipName>Contacts</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Mogli_Number__c</fullName>
+        <deprecated>false</deprecated>
+        <description>This is the gateway formatted phone number</description>
+        <externalId>true</externalId>
+        <inlineHelpText>This is the gateway formatted phone number</inlineHelpText>
+        <label>Mogli Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mogli_Opt_Out__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Mogli Opt Out</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SMS_Message_To_Send__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>SMS Message To Send</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>TextArea</type>
+    </fields>
+    <webLinks>
+        <fullName>Send_Multi_SMS</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Send SMS</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/35.0/apex.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/35.0/connection.js&quot;)}
+
+
+var pageUrl; 
+
+if(&apos;{!$Label.Namespace}&apos; === &quot;none&quot;){
+pageUrl=&quot;/apex/&quot; + &quot;SendSMS&quot;; 
+} else { 
+pageUrl=&quot;/apex/&quot; + &apos;{!$Label.Namespace}&apos; + &quot;SendSMS&quot;; 
+}
+
+
+
+
+
+var recordIds = {!GETRECORDIDS( $ObjectType.Contact )};
+
+if (recordIds[0] == null){
+alert(&quot;Please select at least one record to send.&quot;)
+}
+else{
+pageUrl = pageUrl+&apos;?contactIDs=&apos;+recordIds+&apos;&amp;contact=1&apos;;
+parent.location.href = pageUrl;
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Send_SMS</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Send SMS</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/35.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/35.0/apex.js&quot;)}
+
+if ({!NOT( ISNULL(Contact.Mogli_Number__c) )}){
+
+var url;
+if(&apos;{!$Label.mogli_sms__namespace}&apos; === &quot;none&quot;){
+url=&quot;/apex/&quot; + &quot;SendSMS?contactIDs={!Contact.Id}&quot;+&quot;&amp;contact=1&amp;modal=1&quot;; 
+} else { 
+url=&quot;/apex/&quot; + &apos;{!$Label.mogli_sms__namespace}&apos; + &quot;SendSMS?contactIDs={!Contact.Id}&quot;+&quot;&amp;contact=1&amp;modal=1&quot;; 
+}
+
+window.open(url, &apos;Popup&apos;,&apos;height=510,width=1200,top=0,left=0,location=no,menubar=no,titlebar=no,toolbar=no,status=no&apos;);
+}
+else{
+alert (&quot;Mogli Number Missing.&quot;);
+}</url>
+    </webLinks>
+</CustomObject>

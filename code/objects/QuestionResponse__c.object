@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Question_Response_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Form__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Form</label>
+        <referenceTo>Form__c</referenceTo>
+        <relationshipLabel>Question Responses</relationshipLabel>
+        <relationshipName>Question_Responses</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Gateway__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Gateway</label>
+        <referenceTo>Gateway__c</referenceTo>
+        <relationshipLabel>Question Responses</relationshipLabel>
+        <relationshipName>Question_Responses</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Mogli_Question__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>This field will link the Question Response to the original Outbound Mogli message.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field will link the Question Response to the original Outbound Mogli message.</inlineHelpText>
+        <label>Mogli Question</label>
+        <referenceTo>SMS__c</referenceTo>
+        <relationshipLabel>Question Responses</relationshipLabel>
+        <relationshipName>Question_Responses</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Mogli_Response__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>This field will link the Question Response to the original Inbound Mogli message.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field will link the Question Response to the original Inbound Mogli message.</inlineHelpText>
+        <label>Mogli Response</label>
+        <referenceTo>SMS__c</referenceTo>
+        <relationshipLabel>Question Responses (Mogli Response)</relationshipLabel>
+        <relationshipName>Question_Responses1</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>QuestionTemplate__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Question Template</label>
+        <referenceTo>QuestionTemplate__c</referenceTo>
+        <relationshipLabel>Question Responses</relationshipLabel>
+        <relationshipName>Question_Responses</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Question_Text__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Copy of the question text that was asked at the time of the question (in case the question template changes)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Copy of the question text that was asked at the time of the question (in case the question template changes)</inlineHelpText>
+        <label>Question Text</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Response_Attachments__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>Mogli_Response__r.Attachments__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Response Attachments</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Response__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Response</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <label>Question Response</label>
+    <nameField>
+        <displayFormat>QRN{0000000000}</displayFormat>
+        <label>Question Response Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Question Responses</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

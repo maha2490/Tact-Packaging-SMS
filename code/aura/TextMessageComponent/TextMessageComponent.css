@@ -1,0 +1,114 @@
+.THIS.bubble_left 
+{
+	position: relative;
+	width: 40%;
+	min-height: 60px;
+	padding: 3px 5px 3px 5px;
+	background: #003300;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	color: white;
+	margin-top:3px;
+	margin-botom:3px;
+}
+
+.THIS.bubble_left:after 
+{
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 6px 15px 6px 0;
+	border-color: transparent #003300;
+	display: block;
+	width: 0;
+	z-index: 1;
+	left: -15px;
+	top: 14px;
+}
+
+
+.THIS.bubble_right
+{
+	position: relative;
+	width: 40%;
+	min-height: 60px;
+	padding: 3px 5px 3px 5px;
+	background: #002485;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	color:white;
+	float:right;
+	clear:left;
+	margin-top:3px;
+	margin-botom:3px;
+}
+
+.THIS.bubble_right:after 
+{
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 6px 0 6px 15px;
+	border-color: transparent #002485;
+	display: block;
+	width: 0;
+	z-index: 1;
+	right: -15px;
+	top: 14px;
+}
+
+.THIS.txt_band{
+	width:100%; 
+	min-height:60px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+.THIS.bubble_message{
+	width:100%;
+	height:80%;
+	display:grid;
+
+}
+.THIS.bubble_meta{			
+	height:20%;
+	font-size:10px;
+	float:right;
+	bottom:0;
+	position: absolute;
+	text-align: right;
+	width:95%; 
+	padding-right:20px;
+	display: inline-table;
+}
+
+.THIS.message_control{
+	padding-top: 50px;
+	width:100%;
+}
+
+.THIS.message_input{
+	width:85%;
+	display:inline-block;
+}
+
+.THIS.message_send{
+	width: 15%;
+	float: right;
+	display:inline-block;
+	padding: 18px 10px 18px 10px;
+}
+
+.THIS.button{
+	min-width:100px;
+
+}
+
+.THIS.message_number{
+	width:40%;
+}
+.THIS.message_input_box{
+	width: 85%;
+}

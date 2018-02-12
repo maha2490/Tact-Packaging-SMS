@@ -1,0 +1,21 @@
+<apex:page standardController="Contact" showHeader="true" sidebar="true">
+    <apex:includeLightning />
+    <script>
+        $Lightning.use("Mogli_SMS:TextMessageApp", function(){
+            $Lightning.createComponent(
+                "Mogli_SMS:TextMessageComponent",
+                {},
+                "lightCompDiv",
+                function(cmp){
+                    var recId = '{!record.Id}';
+                    cmp.set("v.recordId",recId);
+                    
+                    var myExternalEvent;
+                    myExternalEvent = $A.get("e.Mogli_SMS:TextMessageRenderEvent");
+                    myExternalEvent.fire();
+                    
+                });
+        });
+    </script>
+    <div id="lightCompDiv"></div>
+</apex:page>

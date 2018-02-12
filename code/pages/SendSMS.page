@@ -1,0 +1,311 @@
+<apex:page controller="SendSMSCTRL" sidebar="false" showHeader="{!showHeader}" tabStyle="SendSMS__tab">
+    <apex:stylesheet value="{!URLFOR($Resource.SendSMSCSS)}"/>
+    <script>
+        function checkAll_1(cb){
+            var inputElem = document.getElementsByTagName("input");
+            for(var i=0; i<inputElem.length; i++){
+                if(inputElem[i].id.indexOf("checkedone1")!=-1)
+                    inputElem[i].checked = cb.checked;
+            }
+        }
+    </script>
+
+    <div class="pageContainer">
+        <apex:form styleClass="myForm" id="form1">
+
+
+            <!--<apex:actionPoller action="{!associateRecords}" interval="5"/>-->
+            <h1> SMS </h1>
+            <hr/>
+            <apex:pageMessages />
+            <br/>
+             <h2> To </h2>
+            <apex:commandButton value=" Add Leads " title=" Add Leads " action="{!displayLead}" style="border:1px solid #eee!important;border-radius:0;"/>
+            <apex:commandButton value=" Add Contacts " title=" Add Contacts " action="{!displayCont}" style="border:1px solid #eee!important;border-radius:0;"/>
+            <br/>
+            
+            <h2>Add Campaign </h2> 
+            <apex:outputPanel >
+                <apex:inputField value="{!campQueue.Campaign__c}"/>
+                <!--<apex:inputField value="{!tempCampaign}"/>-->
+                <apex:actionSupport event="onchange" action="{!addCampaignConList}"/>
+            </apex:outputPanel>
+            <br/>
+            <apex:inputTextarea value="{!toStr}"/>
+            <br/>
+            <small> &nbsp;&nbsp;&nbsp; Enter numbers seprated by semi-colon (;) or Click to Add Leads or Contacts </small> <br/><br/>
+            <h2> Message </h2> <apex:commandButton value=" Add Template " title=" Add Template " action="{!displayTemplate}" style="border:1px solid #eee!important;border-radius:0;"/>
+            <br/>
+            <apex:inputTextarea value="{!msgStr}"/>
+            <br/>
+
+
+ 
+
+            <h2>From    </h2>
+
+
+<apex:selectList id="from" value="{!origination}" size="1" title="From">
+<apex:selectOptions value="{!originationList}"></apex:selectOptions>
+</apex:selectList> 
+
+  
+            <br/>
+            <small> &nbsp;&nbsp;&nbsp; Select “Default” to send using a Contact/Lead’s Default Gateway rules or the Application Settings Default rules (if no Contact/Lead Default Gateway is selected) . Select any other option to override these rules and send to all listed recipients from the selected gateway. </small> <br/><br/>
+
+            <br/>
+            <small> &nbsp;&nbsp;&nbsp; Do Not Deliver Before: </small>
+            <apex:inputField value="{!campQueue.Scheduled_Delivery__c}"/>
+            <hr/>
+            <table border="0" width="100%" cellSpacing="10">
+                <tr>
+                    <td>
+                        <apex:actionStatus id="status">
+                            <apex:facet name="start"> <c:EnhancedActionStatus Message=" Processing..."/> </apex:facet>
+                            <apex:facet name="stop"> <apex:commandButton value="Send" action="{!QueueSMS}" status="status" reRender="form1"/> </apex:facet>
+                        </apex:actionStatus>
+                    </td>
+                    <td width="100%"><apex:commandButton value="Close" action="{!gotoCancel}"/> </td>
+                </tr>
+            </table>
+            
+            <!-- Contact List -->
+            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!showContact}" id="op1a"/>
+            <apex:outputPanel styleClass="popupBox" layout="block" rendered="{!showContact}" id="op1b">
+                <h1> Contacts </h1>
+                <hr/>
+                <br/>
+                <table border="0" cellpadding="2" cellspacing="0" width="100%" position="relative">
+                    <tr>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="A" action="{!sortContacts}"><apex:param name="sortLike" value="A" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="B" action="{!sortContacts}"><apex:param name="sortLike" value="B" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="C" action="{!sortContacts}"><apex:param name="sortLike" value="C" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="D" action="{!sortContacts}"><apex:param name="sortLike" value="D" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="E" action="{!sortContacts}"><apex:param name="sortLike" value="E" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="F" action="{!sortContacts}"><apex:param name="sortLike" value="F" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="G" action="{!sortContacts}"><apex:param name="sortLike" value="G" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="H" action="{!sortContacts}"><apex:param name="sortLike" value="H" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="I" action="{!sortContacts}"><apex:param name="sortLike" value="I" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="J" action="{!sortContacts}"><apex:param name="sortLike" value="J" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="K" action="{!sortContacts}"><apex:param name="sortLike" value="K" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="L" action="{!sortContacts}"><apex:param name="sortLike" value="L" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="M" action="{!sortContacts}"><apex:param name="sortLike" value="M" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="N" action="{!sortContacts}"><apex:param name="sortLike" value="N" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="O" action="{!sortContacts}"><apex:param name="sortLike" value="O" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="P" action="{!sortContacts}"><apex:param name="sortLike" value="P" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="Q" action="{!sortContacts}"><apex:param name="sortLike" value="Q" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="R" action="{!sortContacts}"><apex:param name="sortLike" value="R" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="S" action="{!sortContacts}"><apex:param name="sortLike" value="S" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="T" action="{!sortContacts}"><apex:param name="sortLike" value="T" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="U" action="{!sortContacts}"><apex:param name="sortLike" value="U" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="V" action="{!sortContacts}"><apex:param name="sortLike" value="V" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="W" action="{!sortContacts}"><apex:param name="sortLike" value="W" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="X" action="{!sortContacts}"><apex:param name="sortLike" value="X" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="Y" action="{!sortContacts}"><apex:param name="sortLike" value="Y" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="Z" action="{!sortContacts}"><apex:param name="sortLike" value="Z" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="ALL" action="{!sortContacts}"><apex:param name="sortLike" value="" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp; </td>
+                    </tr>
+                </table>
+                <br/>
+                <table border="0" cellpadding="1" cellspacing="1" position="relative">
+                    <tr>
+                        <td> <apex:commandButton value=" +Add " title="Add"  action="{!addContact}" /> </td>
+                        <td> <apex:commandButton value=" Cancel " title=" Cancel " action="{!closeCont}"  /> </td> 
+                    
+                   
+                        <td> <apex:commandButton value=" Done " title="Done" action="{!closeCont}"/> </td>
+                    </tr>
+                </table>
+                <br/> 
+                <apex:outputPanel id="OPCont">
+                <table border="0" cellpadding="1" cellspacing="2" width="50%" position="relative">
+                    
+                     <tr>
+                        <td colspan="2" class="tdCol1">
+                            <center>
+                            <apex:commandLink action="{!FirstPage}" value=" ◄◄ "         rerender="OPCont" rendered="{!NOT(prev)}"/> &nbsp;
+                            <apex:commandLink action="{!previous}"  value=" ◄ Previous " rerender="OPCont" rendered="{!NOT(prev)}"/> &nbsp;
+                            <apex:commandLink action="{!next}"      value=" Next ► "     rerender="OPCont" rendered="{!NOT(nxt)}" /> &nbsp;
+                            <apex:commandLink action="{!LastPage}"  value=" ►► "         rerender="OPCont" rendered="{!NOT(nxt)}" />
+                            </center>
+                        </td> 
+                    </tr>
+                    <tr>
+                        <th class="tdCol2"> &nbsp; <apex:inputCheckbox onchange="checkAll_1(this)" /> &nbsp; Name </th>
+                        <th class="tdCol1"> &nbsp; Mobile </th>
+                    </tr>
+                                            
+                    
+                        <apex:repeat value="{!inClsCont}" var="con">
+                        <tr>
+                            <td class="tdCol1"> &nbsp; <apex:inputCheckbox value="{!con.conCheck}" id="checkedone1"/> &nbsp; <small> <apex:outputField value="{!con.cont.Name}"/> </small> </td>
+                            <td class="tdCol2"> &nbsp; <small> <apex:outputField value="{!con.cont.MobilePhone}"/> </small> </td>
+                        </tr>
+                        </apex:repeat>
+                        
+                    <tr>
+                        <td colspan="2" class="tdCol1">
+                            <center>
+                            <apex:commandLink action="{!FirstPage}" value=" ◄◄ "         rerender="OPCont" rendered="{!NOT(prev)}"/> &nbsp;
+                            <apex:commandLink action="{!previous}"  value=" ◄ Previous " rerender="OPCont" rendered="{!NOT(prev)}"/> &nbsp;
+                            <apex:commandLink action="{!next}"      value=" Next ► "     rerender="OPCont" rendered="{!NOT(nxt)}" /> &nbsp;
+                            <apex:commandLink action="{!LastPage}"  value=" ►► "         rerender="OPCont" rendered="{!NOT(nxt)}" />
+                            </center>
+                        </td> 
+                    </tr>
+                </table>
+                </apex:outputPanel>
+                <br/>
+                <table border="0" cellpadding="1" cellspacing="1" position="relative">
+                    <tr>
+                        <td> <apex:commandButton value=" +Add " title="Add"  action="{!addContact}" /> </td>
+                        <td> <apex:commandButton value=" Cancel " title=" Cancel " action="{!closeCont}"  /> </td> 
+                    
+                   
+                        <td> <apex:commandButton value=" Done " title="Done" action="{!closeCont}"/> </td>
+                    </tr>
+                </table>
+                <br/>       
+            </apex:outputPanel>
+
+            <!-- Lead List -->
+            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!showLead}" id="op1a1"/>
+            <apex:outputPanel styleClass="popupBox" layout="block" rendered="{!showLead}" id="op1b1">
+                <h1> Leads </h1>
+                <hr/>
+                <br/>
+                <table border="0" cellpadding="2" cellspacing="0" width="100%" position="relative">
+                    <tr>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="A" action="{!sortLeads}"><apex:param name="sortLike" value="A" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="B" action="{!sortLeads}"><apex:param name="sortLike" value="B" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="C" action="{!sortLeads}"><apex:param name="sortLike" value="C" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="D" action="{!sortLeads}"><apex:param name="sortLike" value="D" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="E" action="{!sortLeads}"><apex:param name="sortLike" value="E" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="F" action="{!sortLeads}"><apex:param name="sortLike" value="F" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="G" action="{!sortLeads}"><apex:param name="sortLike" value="G" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="H" action="{!sortLeads}"><apex:param name="sortLike" value="H" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="I" action="{!sortLeads}"><apex:param name="sortLike" value="I" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="J" action="{!sortLeads}"><apex:param name="sortLike" value="J" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="K" action="{!sortLeads}"><apex:param name="sortLike" value="K" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="L" action="{!sortLeads}"><apex:param name="sortLike" value="L" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="M" action="{!sortLeads}"><apex:param name="sortLike" value="M" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="N" action="{!sortLeads}"><apex:param name="sortLike" value="N" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="O" action="{!sortLeads}"><apex:param name="sortLike" value="O" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="P" action="{!sortLeads}"><apex:param name="sortLike" value="P" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="Q" action="{!sortLeads}"><apex:param name="sortLike" value="Q" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="R" action="{!sortLeads}"><apex:param name="sortLike" value="R" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="S" action="{!sortLeads}"><apex:param name="sortLike" value="S" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="T" action="{!sortLeads}"><apex:param name="sortLike" value="T" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="U" action="{!sortLeads}"><apex:param name="sortLike" value="U" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="V" action="{!sortLeads}"><apex:param name="sortLike" value="V" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="W" action="{!sortLeads}"><apex:param name="sortLike" value="W" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="X" action="{!sortLeads}"><apex:param name="sortLike" value="X" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="Y" action="{!sortLeads}"><apex:param name="sortLike" value="Y" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="Z" action="{!sortLeads}"><apex:param name="sortLike" value="Z" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp;  </td>
+                        <td class="tdCol3"> &nbsp; <apex:commandLink value="ALL" action="{!sortLeads}"><apex:param name="sortLike" value="" assignTo="{!sortLike}"/> </apex:commandLink> &nbsp; </td>
+                    </tr>
+                </table>
+                <br/>
+                <table border="0" cellpadding="1" cellspacing="1" position="relative">
+                    <tr>
+                        <td> <apex:commandButton value=" +Add " title="Add"  action="{!addLead}" /> </td>
+                        <td> <apex:commandButton value=" Cancel " title=" Cancel " action="{!closeLead}"  /> </td> 
+                    
+                   
+                        <td> <apex:commandButton value=" Done " title="Done" action="{!closeLead}"/> </td>
+                    </tr>
+                </table>
+                <br/> 
+                <apex:outputPanel id="OPLead">
+                <table border="0" cellpadding="1" cellspacing="2" width="50%" position="relative">
+                    
+                     <tr>
+                        <td colspan="2" class="tdCol1">
+                            <center>
+                            <apex:commandLink action="{!FirstPage}" value=" ◄◄ "         rerender="OPLead" rendered="{!NOT(prev)}"/> &nbsp;
+                            <apex:commandLink action="{!previous}"  value=" ◄ Previous " rerender="OPLead" rendered="{!NOT(prev)}"/> &nbsp;
+                            <apex:commandLink action="{!next}"      value=" Next ► "     rerender="OPLead" rendered="{!NOT(nxt)}" /> &nbsp;
+                            <apex:commandLink action="{!LastPage}"  value=" ►► "         rerender="OPLead" rendered="{!NOT(nxt)}" />
+                            </center>
+                        </td> 
+                    </tr>
+                    <tr>
+                        <th class="tdCol2"> &nbsp; <apex:inputCheckbox onchange="checkAll_1(this)" /> &nbsp; Name </th>
+                        <th class="tdCol1"> &nbsp; Mobile </th>
+                    </tr>
+                                            
+                    
+                        <apex:repeat value="{!inClsLead}" var="ld">
+                        <tr>
+                            <td class="tdCol1"> &nbsp; <apex:inputCheckbox value="{!ld.ldCheck}" id="checkedone1"/> &nbsp; <small> <apex:outputField value="{!ld.ld.Name}"/> </small> </td>
+                            <td class="tdCol2"> &nbsp; <small> <apex:outputField value="{!ld.ld.MobilePhone}"/> </small> </td>
+                        </tr>
+                        </apex:repeat>
+                        
+                    <tr>
+                        <td colspan="2" class="tdCol1">
+                            <center>
+                            <apex:commandLink action="{!FirstPage}" value=" ◄◄ "         rerender="OPLead" rendered="{!NOT(prev)}"/> &nbsp;
+                            <apex:commandLink action="{!previous}"  value=" ◄ Previous " rerender="OPLead" rendered="{!NOT(prev)}"/> &nbsp;
+                            <apex:commandLink action="{!next}"      value=" Next ► "     rerender="OPLead" rendered="{!NOT(nxt)}" /> &nbsp;
+                            <apex:commandLink action="{!LastPage}"  value=" ►► "         rerender="OPLead" rendered="{!NOT(nxt)}" />
+                            </center>
+                        </td> 
+                    </tr>
+                </table>
+                </apex:outputPanel>
+                <br/>
+                <table border="0" cellpadding="1" cellspacing="1" position="relative">
+                    <tr>
+                        <td> <apex:commandButton value=" +Add " title="Add"  action="{!addLead}" /> </td>
+                        <td> <apex:commandButton value=" Cancel " title=" Cancel " action="{!closeLead}"  /> </td> 
+                    
+                   
+                        <td> <apex:commandButton value=" Done " title="Done" action="{!closeLead}"/> </td>
+                    </tr>
+                </table>
+                <br/>       
+            </apex:outputPanel>
+            
+            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!showTemplate}" id="op2a"/>
+            <apex:outputPanel styleClass="popupBox" layout="block" rendered="{!showTemplate}" id="op2b" >
+                <h1> Templates </h1>
+                <hr/>
+                <table border="0" cellpadding="1" cellspacing="2" width="50%" height="100%" position="relative">
+                    <th class="tdCol2"> &nbsp; Name &nbsp; </th>
+                    <th class="tdCol2"> &nbsp; Text &nbsp; </th>
+                    <apex:repeat value="{!inClsTemplate}" var="t">
+                    <tr>
+                        <td width="20%" class="tdCol1"> &nbsp;
+                            <apex:commandLink value="{!t.template.Name__c}" action="{!addTemplate}" title="Add" style="color:#444776!important;"> 
+ <!--                               <apex:param value="{!t.template.Text__c}" assignTo="{!tempText}" name="tempText"/>-->
+                                <apex:param value="{!t.template.Name__c}" assignTo="{!tempName}" name="tempName"/>
+                           </apex:commandLink> &nbsp; 
+                        </td>
+                        <td width="70%" class="tdCol1"> &nbsp; <apex:outputField value="{!t.template.Text__c}"/> </td>
+                    </tr>
+                    </apex:repeat>
+                </table>
+                <br/>
+                <hr/>
+                <table border="0" cellpadding="1" cellspacing="10" position="relative">
+                <tr>
+                    <td>
+                        <apex:commandButton value="Cancel" title="Cancel" action="{!closeTemplate}"/>
+                    </td>
+                </tr>
+                </table>
+            </apex:outputPanel> 
+
+        </apex:form>
+    </div>
+
+    <style type="text/css">
+            input{ autocomplete: on; }
+            a:-webkit-any-link {
+                color: -webkit-link;
+                text-decoration: none;
+                cursor: auto;
+            }
+    </style>
+</apex:page>
